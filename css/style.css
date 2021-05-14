@@ -1,0 +1,17 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+#tipo_carpeta {
+    display: flex;
+}
+
+#tipo_carpeta .item {
+    padding: 5px;
+    margin: 5px;
+    background: #999;
+    text-decoration: none;
+    color: white;
+    line-height: 30px;
+    border-radius: 5px;
+}

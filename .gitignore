@@ -1,0 +1,15 @@
+foto/
+video/
+audio/
+texto/
+
+secret.js
+archivo.mp3
+datos.json
+
+!foto/.gitkeep
+!video/.gitkeep
+!audio/.gitkeep
+!texto/.gitkeep
+!documentos/.gitkeep
+node_modules
