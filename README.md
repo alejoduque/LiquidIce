@@ -1,7 +1,6 @@
-<img src="https://raw.githubusercontent.com/estacionckweb/Telegram2Icecast/master/t2i_logo_sml_fondoblanco.jpg" /> <br>
+<img src="#" /> <br>
 
-
-# Telegram2Icecast
+# De Telegram a Icecast (http://red.radiolibre.cc) y Archive.org
 
 Software que permite crear una radio a partir de un grupo de chat en la red libre de mensajeria instantanea y anonima conocida como Telegram (similar al Whatsapp de la red controlada por FakeBook). t2i permite enviar/recibir/reunir y administrar contenidos individuales o grupales en un lugar accesible o privado en Internet. 
 
@@ -12,10 +11,11 @@ Un bot (script) de Telegram captura todo lo que le envias y:
 -Alamacena (Text,Docs,Video,Audio) en un servidor web. <br>
 -Los audios son enviados, en orden de llegada a un streaming en icecast.<br>
 
+Codigo base desarrollado por [Néstor Andrés Peña](http://www.nestorandres.com), diseñado para el laboratorio #TodoEsRadio con ayudas en desarrollo de gstreamer en rpi de juan kalash.
+
 
 ### Corre con:
 node-v8.9.0-linux-armv6l en rPi - https://nodejs.org/dist/v8.9.0/node-v8.9.0-linux-armv6l.tar.gz <br>
-Codigo de [Néstor Andrés Peña](http://www.nestorandres.com) [@ckweb](https://ckweb.gov.co/) con ayudas en desarrollo de gstreamer en rpi de juan kalash 
 
 ## Pasos a seguir para correr una instancia en un computador con Node.js instalado
 
