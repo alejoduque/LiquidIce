@@ -1,0 +1,2 @@
+output.icecast(%mp3, host="XXX.XXX.XXX.XXX",port=8000,password="XXXXXXX",mount="XXXXX.mp3",mksafe(playlist(mode="normal","/home/pi/Telegram2Icecast/audio/1.m3u",reload=75)))
+

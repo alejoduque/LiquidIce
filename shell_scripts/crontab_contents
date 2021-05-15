@@ -1,0 +1,4 @@
+*/4 * * * * /home/pi/Telegram2Icecast/foto/upf.sh
+*/2 * * * * /home/pi/Telegram2Icecast/audio/upa.sh
+*/6 * * * * /home/pi/Telegram2Icecast/video/upv.sh
+*/15 * * * * /home/pi/Telegram2Icecast/documentos/upd.sh

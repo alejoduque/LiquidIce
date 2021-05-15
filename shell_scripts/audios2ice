@@ -1,0 +1,28 @@
+#!/bin/sh
+
+# por  alejo@riseup.net
+# Script para convertir audios (.oga) de Telegram a .mp3 automaticamente a medida que llegan a la carpeta base
+
+## PARAMETROS #############################################
+######################## CAMBIAR ##########################
+# Carpeta base
+BASEDIR=/home/pi/Telegram2Icecast/audio
+#PID=$pidof liquidsoap
+#PID=$(pidof liquidsoap)
+CAT=$(cat 1.m3u)
+###########################################################
+cd $BASEDIR         ### va a la carpeta base donde se va hacer el trabajo
+
+while :             ### ciclo infinito para reproducir los audios que van llegando a $DIRBASE
+do
+##	ffmpeg -nostdin -i *.oga -ac 2 "${i%.*}.mp3" && rm *.oga
+
+	for i in *.oga; do ffmpeg -i "$i" -ac 2 "${i%.*}.mp3"; rm *.oga; done
+
+#	echo convirtiendo_audios
+	sleep 2
+	ls -1v |grep .mp3 > 1.m3u
+#	echo playlist_creado
+#	echo $CAT
+	sleep 28
+done
