@@ -21,7 +21,7 @@
 
 ### Es un puente que pasa mensajes desde Telegram al software Icecast de una radio online (http://red.radiolibre.cc) dejando de paso un archivo en Archive.org. Todo funcionando desde una RaspberryPi version 3
 
-#<img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" /> <br>
+<img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" width="440" height="280"/> <br>
 
 LiquidIce permite distribuir contenidos, por ejemplo: 
 1. Los archivos de audio enviados al grupo (al undir el icono de microfono de Telegram son transmitidos en tiempo real  a todos los participantes del grupo como tambien por una emisora en Internet (via Icecast) --> https://live.radiolibre.cc/bot.mp3
