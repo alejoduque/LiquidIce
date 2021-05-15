@@ -17,7 +17,7 @@
 
 
 
-# Puente de Telegram a Icecast (http://red.radiolibre.cc) pasando por Archive.org
+# Puente de Telegram a Icecast (http://red.radiolibre.cc) pasando por Archive.org y funcionando desde una RaspberryPi version 3
 
 LiquidIce es un Software que permite crear una radio online a partir de los aportes de un grupo de chat que opeara en la red libre de mensajeria instantanea y anonima conocida como Telegram (similar al Whatsapp de FakeBook): https://t.me/radiolibreCC 
 
@@ -31,7 +31,7 @@ LiquidIce permite distribuir contenidos, por ejemplo:
 -Alamacena (Text,Docs,Video,Audio) en archive.org https://archive.org/details/@wiki-opdlv <br>
 -Los audios son enviados, en orden de llegada a un streaming en Icecast<br> usando LiquidSoap, de ahi el nombre: LiquidIce
 
-Codigo base desarrollado por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la direccion de [alejoduque](https://github.com/alejoduque) con ayudas en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2).
+Código base desarrollado por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la dirección de [alejoduque](https://github.com/alejoduque) con ayudas en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2). Esta rama usa LiquidSoap, descartando la version 1 que usaba VLC y consumia casi todos los recursos de la raspberryPi.
 
 
 ### Corre desde una raspberryPi:
