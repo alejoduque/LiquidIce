@@ -59,4 +59,9 @@ Con las dependencias instaladas ya se puede correr el script con:
 node t2i.js
 ```
 
+En el directorio shell_scripts estan los archivos que se necesitan para terminar de configurar el sistema. Sirven como referencia para la ajustar cada uno de los servicios que corren automaticamene. Es necesario instalar LiquiSoap y agregar el .liq asi mismo ubicar los .sh en las carpetas de audio, foto, video, documentos y asegurarse de tener un crontab que los ejecute. En el bashrc estan las rutas a los scripts que ejecutan los servicios arriba mencionado de NodeJS.
 
+
+```bash
+audios2ice  bashrc  crontab_contents  liquidsoapliq  upa.sh  upd.sh  upf.sh  upv.sh
+```
