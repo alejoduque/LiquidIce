@@ -17,7 +17,7 @@
 
 
 
-# LiquidIce es un Software que permite crear una radio online a partir de los aportes de un grupo de chat que opeara en la red libre de mensajeria instantanea y anonima conocida como Telegram (similar al Whatsapp de FakeBook): https://t.me/radiolibreCC 
+# LiquidIce es un Software que permite crear una transmision de audio a una radio online al tiempo que genera un archivo a partir de todos los aportes de un grupo de chat de la red de mensajeria instantanea y anonima Telegram: https://t.me/radiolibreCC 
 
 LiquidIce permite distribuir contenidos, por ejemplo: 
 1. Los archivos de audio enviados al grupo (al undir el icono de microfono de Telegram son transmitidos en tiempo real  a todos los participantes del grupo como tambien por una emisora en Internet (via Icecast) --> https://live.radiolibre.cc/bot.mp3
