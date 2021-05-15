@@ -19,8 +19,8 @@ case "$1" in
   start)
     echo "Starting liquidice"
     # run application you want to start
-#    exec node /home/pi/tele2ice_ok/t2i.js
-     liquidsoap 'output.icecast(%mp3, host="88.99.123.96",port=8000,password="n0alinea2",mount="21n.mp3",mksafe(playlist(mode="normal","/home/pi/Telegram2Icecast/audio/1.m3u",reload_mode="watch")))'
+#    exec node /home/pi/tele2ice_ok/t2i.js. la linea de abajo requiere ser actualizada.
+     liquidsoap 'output.icecast(%mp3, host="88.99.123.96",port=8000,password="xxxxxxxx",mount="21n.mp3",mksafe(playlist(mode="normal","/home/pi/Telegram2Icecast/audio/1.m3u",reload_mode="watch")))'
     ;;
   stop)
     echo "Stopping liquidice"
