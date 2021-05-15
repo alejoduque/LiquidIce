@@ -1,3 +1,6 @@
+
+```bash
+
       ___                   ___           ___                       ___                       ___           ___     
      /\__\      ___        /\  \         /\__\          ___        /\  \          ___        /\  \         /\  \    
     /:/  /     /\  \      /::\  \       /:/  /         /\  \      /::\  \        /\  \      /::\  \       /::\  \   
@@ -10,10 +13,10 @@
     \:\__\   \/__/         /:/  /       \::/  /      \/__/        \::/__/      \/__/        \:\__\        \:\__\    
      \/__/                 \/__/         \/__/                     ~~                        \/__/         \/__/    
 
+```
 
 
 
-#<img src="#" /> <br>
 # Puente de Telegram a Icecast (http://red.radiolibre.cc) pasando por Archive.org
 
 LiquidIce es un Software que permite crear una radio online a partir de los aportes de un grupo de chat que opeara en la red libre de mensajeria instantanea y anonima conocida como Telegram (similar al Whatsapp de FakeBook): https://t.me/radiolibreCC 
@@ -26,7 +29,7 @@ LiquidIce permite distribuir contenidos, por ejemplo:
 ¿Como funciona? Un bot (script) de Telegram captura todo lo que le envias y:
 
 -Alamacena (Text,Docs,Video,Audio) en archive.org https://archive.org/details/@wiki-opdlv <br>
--Los audios son enviados, en orden de llegada a un streaming en icecast<br>
+-Los audios son enviados, en orden de llegada a un streaming en Icecast<br> usando LiquidSoap, de ahi el nombre: LiquidIce
 
 Codigo base desarrollado por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la direccion de [alejoduque](https://github.com/alejoduque) con ayudas en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2).
 
@@ -54,3 +57,5 @@ Con las dependencias instaladas ya se puede correr el script con:
 ```bash
 node t2i.js
 ```
+
+#<img src="#" /> <br>
