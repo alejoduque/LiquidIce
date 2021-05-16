@@ -20,11 +20,11 @@ var sonando = false;
 app.set('port', (process.env.PORT || 5000))
 
 app.use(express.static(__dirname))
-app.use('/video', serveIndex(__dirname + '/video'));
-app.use('/audio', serveIndex(__dirname + '/audio'));
+app.use('/video', serveIndex(__dirname + '/video/uploaded'));
+app.use('/audio', serveIndex(__dirname + '/audio/uploaded'));
 app.use('/texto', serveIndex(__dirname + '/texto'));
-app.use('/foto', serveIndex(__dirname + '/foto'));
-app.use('/documentos', serveIndex(__dirname + '/documentos'));
+app.use('/foto', serveIndex(__dirname + '/foto/uploaded'));
+app.use('/documentos', serveIndex(__dirname + '/documentos/uploaded'));
 
 app.get('/', function(request, response) {
     response.sendFile(__dirname + '/index.html');
