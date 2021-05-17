@@ -17,10 +17,14 @@
 
 
 
-## **LiquidIce** es un software que instalado en una raspberryPi o computador personal nos permite crear un archivo colectivo al mismo tiempo que generamos, con los audios compartidos, una transmision a traves de una radio online. Todos los aportes que realicemos detro de un grupo de chat en la red de mensajeria instantanea y anonima Telegram: https://t.me/radiolibreCC pasaran a conformar un archivo. Registro de un proceso grupal o individual. Util en las marchas o para llevar una bitacora personal donde quedan fotos, videos, audios y documentos.
+## **LiquidIce**  es un software que, instalado en una raspberryPi o computador personal, nos permite crear un archivo colectivo con los audios compartidos en un grupo de la red de mensajería instantánea y anónima Telegram, al mismo tiempo que generamos con estos audios una transmision a través de una radio online.
+
+Todos los aportes que realicemos detro de un grupo de chat en Telegram: https://t.me/radiolibreCC pasaran a conformar un archivo de un proceso grupal o individual. 
+
+**LiquidIce** es útil en las marchas, asambleas o juntanzas o para llevar una bitácora personal.
 
 
-### Pienselo como un puente que conecta mensajes desde Telegram al software Icecast de una radio online (http://red.radiolibre.cc) dejando de paso un archivo en Archive.org. Todo funcionando desde una RaspberryPi version 3 (pequeño computador de valor economico y bajo consumo electrico).
+### Imaginese un canal que conecta mensajes desde **Telegram** al software **Icecast** de una radio online (http://red.radiolibre.cc) dejando de paso un archivo en **Archive.org**. Todo funcionando desde una **RaspberryPi** version 3 (pequeño computador de valor economico y bajo consumo electrico).
 
 
 **LiquidIce** permite distribuir contenidos, por ejemplo: 
