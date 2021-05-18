@@ -21,10 +21,9 @@
 
 Todos los aportes que realicemos detro de un grupo de chat en Telegram: https://t.me/radiolibreCC pasaran a conformar un archivo de un proceso grupal o individual. 
 
-**LiquidIce** es útil en las marchas, asambleas o juntanzas o para llevar una bitácora personal.
+**LiquidIce** es útil en las marchas, asambleas o juntanzas o para llevar una bitácora personal: https://liquidice.radiolibre.cc/
 
-
-### Imaginese un canal que conecta mensajes desde **Telegram** al software **Icecast** de una radio online (http://red.radiolibre.cc) dejando de paso un archivo en **Archive.org**. Todo funcionando desde una **RaspberryPi** version 3 (pequeño computador de valor economico y bajo consumo electrico).
+### Imagine un canal que conecta mensajes desde un grupo en **Telegram** al sistema de tranmision de radio online (http://red.radiolibre.cc) creando de paso un archivo en **Archive.org**. Y todo funcionando desde una pequeña **RaspberryPi** version 3 conectada en casa.
 
 
 **LiquidIce** permite distribuir contenidos, por ejemplo: 
