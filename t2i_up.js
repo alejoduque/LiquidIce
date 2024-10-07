@@ -134,7 +134,8 @@ bot.on('message', async (msg) => {
         }
 
         function darStringArchivo(carpeta, ext) {
-            return path.join(carpeta, 'uploaded', `${msg.from.id}_${msg.from.first_name}_${msg.date}_${msg.message_id}.${ext}`);
+            return path.join(carpeta, 'uploaded', 
+`${msg.from.id}_${msg.from.first_name}_${msg.date}_${msg.message_id}.${ext}`);
         }
 
         async function descargaMedia(paquete, carpeta, ext, msj_confirmacion) {
@@ -171,7 +172,7 @@ bot.on('message', async (msg) => {
                         // Uncomment the next line if you want to enable audio playback
                         // reproducirStream();
                     }
-                    bot.sendMessage(chatId, 'Los audios se emiten aqui (en 3 min): live.radiolibre.cc:8000/bot.mp3');
+                    bot.sendMessage(chatId, 'Los audios se escuchan en 2min por aqui: https://live.radiolibre.cc:8000/bot.mp3');
                 }
 
                 obj.file = filePath;
