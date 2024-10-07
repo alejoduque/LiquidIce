@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const axios = require('axios');
 const fs = require('fs').promises;
+const path = require('path');
 const { createWriteStream } = require('fs');
 const { spawn } = require('child_process');
 const ip = require('ip');
@@ -36,12 +37,40 @@ app.listen(app.get('port'), () => {
 
 const bot = new TelegramBot(TOKEN, {polling: true});
 
+// Function to ensure a directory exists
+async function ensureDir(dirpath) {
+    try {
+        await fs.mkdir(dirpath, { recursive: true });
+    } catch (err) {
+        if (err.code !== 'EEXIST') throw err;
+    }
+}
+
 bot.on('message', async (msg) => {
     const chatId = msg.chat.id;
 
     try {
-        const rawjson = await fs.readFile('datos.json', 'utf8');
-        let parsedjson = JSON.parse(rawjson);
+        let parsedjson = [];
+        try {
+            const rawjson = await fs.readFile('datos.json', 'utf8');
+            if (rawjson.trim() === '') {
+                console.log('datos.json is empty. Initializing with an empty array.');
+                parsedjson = [];
+            } else {
+                parsedjson = JSON.parse(rawjson);
+            }
+        } catch (error) {
+            if (error.code === 'ENOENT') {
+                console.log('datos.json not found. Creating a new one.');
+                await fs.writeFile('datos.json', '[]');
+            } else if (error instanceof SyntaxError) {
+                console.log('Invalid JSON in datos.json. Initializing with an empty array.');
+                parsedjson = [];
+            } else {
+                throw error;
+            }
+        }
+
         let obj = {
             message_id: msg.message_id,
             from_id: msg.from.id,
@@ -67,9 +96,12 @@ bot.on('message', async (msg) => {
         } else if (msg.text) {
             obj.type = 'texto';
             obj.file = msg.text;
-            await fs.writeFile(darStringArchivo('texto', 'txt'), msg.text);
+            const filePath = darStringArchivo('texto', 'txt');
+            await ensureDir(path.dirname(filePath));
+            await fs.writeFile(filePath, msg.text);
             parsedjson.push(obj);
             await fs.writeFile('datos.json', JSON.stringify(parsedjson));
+            bot.sendMessage(chatId, 'Texto recibido y guardado.');
         }
 
         function darStringArchivo(carpeta, ext) {
@@ -83,7 +115,11 @@ bot.on('message', async (msg) => {
             try {
                 const response = await axios.get(newUrl);
                 const fileUrl = `${urlFile}${response.data.result.file_path}`;
-                const writer = createWriteStream(darStringArchivo(carpeta, ext));
+                const filePath = darStringArchivo(carpeta, ext);
+                
+                await ensureDir(path.dirname(filePath));
+                
+                const writer = createWriteStream(filePath);
                 
                 const downloadResponse = await axios({
                     method: 'get',
@@ -99,18 +135,18 @@ bot.on('message', async (msg) => {
                 });
 
                 if (carpeta === 'audio' && paquete.file_size < 57000) {
-                    pendientes.push(`audio/off/${darStringArchivo(carpeta, ext)}`);
+                    pendientes.push(`audio/off/${filePath}`);
                     if (!sonando) {
                         // Uncomment the next line if you want to enable audio playback
                         // reproducirStream();
                     }
-                    bot.sendMessage(chatId, 'You can listen to the audio in about 5 minutes (reload the page): live.radiolibre.cc:8000/bot.mp3');
+                    bot.sendMessage(chatId, 'Los audios se emiten aqui (en 3 min): live.radiolibre.cc:8000/bot.mp3');
                 }
 
-                obj.file = darStringArchivo(carpeta, ext);
+                obj.file = filePath;
                 parsedjson.push(obj);
                 await fs.writeFile('datos.json', JSON.stringify(parsedjson));
-                bot.sendMessage(chatId, 'rx');
+                bot.sendMessage(chatId, `${msj_confirmacion}`);
             } catch (error) {
                 console.error('Error:', error);
                 bot.sendMessage(chatId, 'An error occurred while processing your file.');
@@ -123,7 +159,11 @@ bot.on('message', async (msg) => {
             try {
                 const response = await axios.get(newUrl);
                 const fileUrl = `${urlFile}${response.data.result.file_path}`;
-                const writer = createWriteStream(darStringArchivo(carpeta, paquete.file_name));
+                const filePath = darStringArchivo(carpeta, paquete.file_name);
+                
+                await ensureDir(path.dirname(filePath));
+                
+                const writer = createWriteStream(filePath);
                 
                 const downloadResponse = await axios({
                     method: 'get',
@@ -138,7 +178,7 @@ bot.on('message', async (msg) => {
                     writer.on('error', reject);
                 });
 
-                obj.file = darStringArchivo(carpeta, paquete.file_name);
+                obj.file = filePath;
                 parsedjson.push(obj);
                 await fs.writeFile('datos.json', JSON.stringify(parsedjson));
                 bot.sendMessage(chatId, `Local IP to check history: ${ip.address()}:${app.get('port')}`);
