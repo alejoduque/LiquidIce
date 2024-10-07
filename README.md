@@ -19,31 +19,42 @@
 
 ## **LiquidIce** es un software que, instalado en una raspberryPi o computador personal, nos permite crear un archivo colectivo conformado a partir de audios, fotos, documentos y videos compartidos via **Telegram**. Con los audios generamos una transmisión radial a través de http://red.radiolibre.cc
 
-Todos los aportes que realicemos detro de un grupo de chat en Telegram: https://t.me/radiolibreCC pasaran a conformar un archivo de un proceso grupal o individual. 
+Todos los aportes que realicemos detro de un grupo de chat en Telegram pasaran a conformar un archivo de un proceso grupal o individual. 
 
-**LiquidIce** es útil en las marchas, asambleas o juntanzas o para llevar una bitácora personal: https://liquidice.radiolibre.cc/
+**LiquidIce** es útil para trabajos grupales y colaborativos. Asambleas y juntanzas o para llevar una bitácora personal.
 
-### Imagine un canal que conecta mensajes desde un grupo en **Telegram** al sistema de tranmision de radio online (http://red.radiolibre.cc) creando de paso un archivo en **Archive.org**. Y todo funcionando desde una pequeña **RaspberryPi** version 3 conectada en casa.
+### Imagine un canal que conecta mensajes desde un grupo en **Telegram** al sistema de tranmision de radio online (http://red.radiolibre.cc) creando de paso un archivo en **Archive.org**. Y todo funcionando desde una pequeña **RaspberryPi** conectada en su casa.
 
 
 **LiquidIce** permite distribuir contenidos, por ejemplo: 
-1. Los archivos de audio enviados al grupo (al undir el icono de microfono de Telegram son transmitidos en tiempo real  a todos los participantes del grupo como tambien por una emisora en Internet (via Icecast) --> https://live.radiolibre.cc/bot.mp3
+1. Los archivos de audio enviados al grupo (al presionar el icono de microfono de Telegram son transmitidos en tiempo real a todos los participantes del grupo como tambien por una emisora en Internet (via Icecast) --> https://live.radiolibre.cc/bot.mp3
 Los audios son enviados, en orden de llegada a un streaming en Icecast<br> usando LiquidSoap, de ahi el nombre: LiquidIce
 
 
 2. Las imagenes enviadas a traves de Telegram son archivadas en archive.org, por ejemplo: https://archive.org/details/fotoBot
 Igualmente almacena Texto, Documentos, Videos y Audios en archive.org https://archive.org/details/@wiki-opdlv <br>
 
-El código base desarrollado o integracion al bot de **Telegram** fue escrito por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la dirección de [alejoduque](https://github.com/alejoduque) con ayudas en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2). Esta rama usa **LiquidSoap**, descartando el uso de cVLC de la version inicial que consumia todos los recursos de la **raspberryPi** haciendola inestable. Al momento de la publicacion de este software asi esta corriendolo la rPi:
+El código base desarrollado o integracion al bot de **Telegram** fue escrito por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la dirección de [alejoduque](https://github.com/alejoduque) con ayudas, aportes y comentarios en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2). Esta rama fue modificada por aduque y Claude para utilizar **LiquidSoap**, descartando cVLC de la version inicial ya que consumia todos los recursos de la **raspberryPi v3** haciendola inestable. Igualmente se realizaron multiples cambios en el archivo que corre node.
 
 ```bash
 uptime
  18:49:01 up 3 days, 20:29,  2 users,  load average: 0.48, 0.38, 0.36
+
+                                           
+                                           
+.                          . --.--         
+|   o               o      |   |           
+|   .   .-., .  .   .   .-.|   |   .-. .-. 
+|   |  (   | |  |   |  (   |   |  (   (.-' 
+`--' `- `-'| `--`--' `- `-'`---'-- `-' `--'
+          -|-                              
+           '                               
+
+
 ```
 
 <img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" width="440" height="280"/> <br>
-### Corre desde una raspberryPi:
-node-v8.9.0-linux-armv6l en rPi - https://nodejs.org/dist/v8.9.0/node-v8.9.0-linux-armv6l.tar.gz <br>
+### Corre desde una raspberryPi v3b en adelante:
 
 ## Pasos a seguir para correr una instancia en un computador con Node.js instalado
 
