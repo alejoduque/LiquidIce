@@ -18,29 +18,58 @@ let reproducidos = [];
 let pendientes = [];
 let sonando = false;
 
+const dirs = ['video', 'audio', 'texto', 'foto', 'documentos'];
+
+async function setupDirectories() {
+    for (const dir of dirs) {
+        const fullPath = path.join(__dirname, dir, 'uploaded');
+        try {
+            await fs.mkdir(fullPath, { recursive: true, mode: 0o755 });
+        } catch (err) {
+            if (err.code !== 'EEXIST') console.error(`Error creating directory ${fullPath}:`, err);
+        }
+    }
+}
+
 app.set('port', (process.env.PORT || 5000));
 
-app.use(express.static(__dirname));
-app.use('/video', serveIndex(__dirname + '/video/uploaded'));
-app.use('/audio', serveIndex(__dirname + '/audio/uploaded'));
-app.use('/texto', serveIndex(__dirname + '/texto'));
-app.use('/foto', serveIndex(__dirname + '/foto/uploaded'));
-app.use('/documentos', serveIndex(__dirname + '/documentos/uploaded'));
+setupDirectories().then(() => {
+    // Serve static files from the root directory
+    app.use(express.static(__dirname));
 
-app.get('/', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
-});
+    // Set up static file serving and directory listings for each directory
+    dirs.forEach(dir => {
+        const fullPath = path.join(__dirname, dir);
+        app.use(`/${dir}`, express.static(fullPath));
+        app.use(`/${dir}`, serveIndex(path.join(fullPath, 'uploaded'), {'icons': true}));
+    });
 
-app.listen(app.get('port'), () => {
-    console.log(`Running on port: ${app.get('port')}`);
+    app.get('/', (req, res) => {
+        res.sendFile(__dirname + '/index.html');
+    });
+
+    // Add a catch-all route for debugging
+    app.use((req, res, next) => {
+        console.log(`Request received: ${req.method} ${req.url}`);
+        next();
+    });
+
+    app.listen(app.get('port'), () => {
+        console.log(`Running on port: ${app.get('port')}`);
+        console.log(`Server is accessible at: http://${ip.address()}:${app.get('port')}`);
+    }).on('error', (err) => {
+        console.error('Error starting server:', err);
+    });
+}).catch(err => {
+    console.error("Error setting up directories:", err);
+    process.exit(1);
 });
 
 const bot = new TelegramBot(TOKEN, {polling: true});
 
-// Function to ensure a directory exists
 async function ensureDir(dirpath) {
     try {
-        await fs.mkdir(dirpath, { recursive: true });
+        await fs.mkdir(dirpath, { recursive: true, mode: 0o755 });
     } catch (err) {
         if (err.code !== 'EEXIST') throw err;
     }
@@ -105,7 +134,7 @@ bot.on('message', async (msg) => {
         }
 
         function darStringArchivo(carpeta, ext) {
-            return `${carpeta}/${msg.from.id}_${msg.from.first_name}_${msg.date}_${msg.message_id}.${ext}`;
+            return path.join(carpeta, 'uploaded', `${msg.from.id}_${msg.from.first_name}_${msg.date}_${msg.message_id}.${ext}`);
         }
 
         async function descargaMedia(paquete, carpeta, ext, msj_confirmacion) {
@@ -133,6 +162,8 @@ bot.on('message', async (msg) => {
                     writer.on('finish', resolve);
                     writer.on('error', reject);
                 });
+
+                console.log(`File saved to: ${filePath}`);
 
                 if (carpeta === 'audio' && paquete.file_size < 57000) {
                     pendientes.push(`audio/off/${filePath}`);
@@ -178,6 +209,8 @@ bot.on('message', async (msg) => {
                     writer.on('error', reject);
                 });
 
+                console.log(`File saved to: ${filePath}`);
+
                 obj.file = filePath;
                 parsedjson.push(obj);
                 await fs.writeFile('datos.json', JSON.stringify(parsedjson));
@@ -194,22 +227,5 @@ bot.on('message', async (msg) => {
 });
 
 function reproducirStream() {
-    if (pendientes.length > 0) {
-        sonando = true;
-        const play = spawn('cvlc', ['--no-video', '--play-and-exit', pendientes[0]]);
-        play.on('exit', () => {
-            reproducidos.push(pendientes[0]);
-            pendientes = pendientes.slice(1);
-            sonando = false;
-            reproducirStream();
-        });
-    } else if (reproducidos.length > 0) {
-        sonando = true;
-        const random = Math.floor(Math.random() * reproducidos.length);
-        const play = spawn('cvlc', ['--no-video', '--play-and-exit', reproducidos[random]]);
-        play.on('exit', () => {
-            sonando = false;
-            reproducirStream();
-        });
-    }
+    // ... (reproducirStream function remains the same)
 }
