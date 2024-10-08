@@ -1,17 +1,95 @@
+:root {
+    --color1: #ff6b6b;
+    --color2: #4ecdc4;
+    --color3: #45b7d1;
+    --color4: #f7d354;
+    --color5: #ff8a5b;
+}
+
 body {
     font-family: 'Courier New', Courier, monospace;
+    background-image: url('/api/placeholder/1920/1080');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.large-text {
+    font-size: 20vmin; /* Very large font size */
+    line-height: 1.2;
+    text-align: center;
+    color: white;
+    text-shadow: 0.5vmin 0.5vmin 1vmin rgba(0, 0, 0, 0.5);
+    margin: 5vmin;
+    max-width: 90vw;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
 }
 
 #tipo_carpeta {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 3vmin;
+    border-radius: 3vmin;
+    max-width: 90vw;
+    margin-top: 5vmin;
 }
 
 #tipo_carpeta .item {
-    padding: 5px;
-    margin: 5px;
-    background: #999;
+    padding: 1vmin 2vmin;
+    margin: 1vmin;
+    background: linear-gradient(45deg, var(--color1), var(--color2), var(--color3));
     text-decoration: none;
     color: white;
-    line-height: 30px;
-    border-radius: 5px;
+    line-height: 1.2;
+    border-radius: 3vmin;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 0.1vmin;
+    transition: all 0.3s ease;
+    box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.2);
+    font-size: calc(10px + 1vw);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 5vmin;
+}
+
+#tipo_carpeta .item:nth-child(2n) {
+    background: linear-gradient(45deg, var(--color3), var(--color4), var(--color5));
+}
+
+#tipo_carpeta .item:hover {
+    transform: translateY(-0.3vmin) scale(1.05);
+    box-shadow: 0 0.8vmin 1.5vmin rgba(0, 0, 0, 0.3);
+    filter: brightness(1.1);
+}
+
+@media (max-width: 600px) {
+    .large-text {
+        font-size: 15vmin;
+    }
+
+    #tipo_carpeta {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    #tipo_carpeta .item {
+        margin: 1vmin 0;
+        font-size: calc(12px + 1.5vw);
+    }
 }
