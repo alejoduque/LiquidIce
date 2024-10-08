@@ -1,26 +1,158 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="UTF-8">
-	<title>M A N A K A I - R E S E R V A - C O L O M B I A</title>
+    <meta charset="UTF-8">
+    <title>M A N A K A I - R E S E R V A - C O L O M B I A</title>
+    <script type="text/javascript" src="./js/jquery.js"></script>
+    <script type="text/javascript" src="./js/script.js"></script>
+    <link rel="stylesheet" href="./css/style.css" media="all">
+    <style>
+        /* New styles to complement existing CSS */
+        :root {
+            --color1: #ff6b6b;
+            --color2: #4ecdc4;
+            --color3: #45b7d1;
+            --color4: #f7d354;
+            --color5: #ff8a5b;
+        }
 
-	<script type="text/javascript" src="./js/jquery.js"></script>
-	<script type="text/javascript" src="./js/script.js"></script>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding-top: 20px;
+        }
 
-	<link rel="stylesheet" href="./css/style.css" media="all">
+        .header {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .ascii-logo {
+            font-family: 'Courier New', Courier, monospace;
+            color: white;
+            font-size: 14px;
+            line-height: 1.2;
+            white-space: pre;
+            text-align: center;
+            overflow-x: auto;
+        }
+
+        #info {
+            font-size: 5vmin;
+            line-height: 1.2;
+            text-align: center;
+            color: white;
+            margin: 5vmin;
+            max-width: 90vw;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #tipo_carpeta {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 3vmin;
+            border-radius: 3vmin;
+            max-width: 90vw;
+            margin-top: 5vmin;
+        }
+
+        #tipo_carpeta .item {
+            padding: 1vmin 2vmin;
+            margin: 1vmin;
+            background: linear-gradient(45deg, var(--color1), var(--color2), var(--color3));
+            text-decoration: none;
+            color: white;
+            line-height: 1.2;
+            border-radius: 3vmin;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.1vmin;
+            transition: all 0.3s ease;
+            box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.2);
+            font-size: calc(10px + 1vw);
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 5vmin;
+        }
+
+        #tipo_carpeta .item:nth-child(2n) {
+            background: linear-gradient(45deg, var(--color3), var(--color4), var(--color5));
+        }
+
+        #tipo_carpeta .item:hover {
+            transform: translateY(-0.3vmin) scale(1.05);
+            box-shadow: 0 0.8vmin 1.5vmin rgba(0, 0, 0, 0.3);
+            filter: brightness(1.1);
+        }
+
+        #content {
+            color: white;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            max-width: 90vw;
+        }
+
+        @media (max-width: 600px) {
+            .ascii-logo {
+                font-size: 10px;
+            }
+
+            #info {
+                font-size: 4vmin;
+            }
+
+            #tipo_carpeta {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            #tipo_carpeta .item {
+                margin: 1vmin 0;
+                font-size: calc(12px + 1.5vw);
+            }
+        }
+    </style>
 </head>
 <body>
+    <header class="header">
+        <pre class="ascii-logo">
+                                      
+                                           
+.                          . --.--         
+|   o               o      |   |           
+|   .   .-., .  .   .   .-.|   |   .-. .-. 
+|   |  (   | |  |   |  (   |   |  (   (.-' 
+`--' `- `-'| `--`--' `- `-'`---'-- `-' `--'
+          -|-                              
+           '                               
+        </pre>
+    </header>
     <div id="info">
-
     </div>
     <div id="tipo_carpeta">
-        <a href="./foto/uploaded/" class="item">Fotos</a>
-        <a href="./documentos/uploaded/" class="item">Documentos</a>
-        <a href="./video/uploaded/" class="item">Videos</a>
+        <a href="./foto/" class="item">Fotos</a>
+        <a href="./documentos/" class="item">Documentos</a>
+        <a href="./video/" class="item">Videos</a>
         <a href="./audio/uploaded/" class="item">Audios</a>
         <a href="./texto/" class="item">Textos</a>
     </div>
-
     <ul id="content"></ul>
 </body>
 </html>
