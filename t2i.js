@@ -40,8 +40,14 @@ setupDirectories().then(() => {
     // Set up static file serving and directory listings for each directory
     dirs.forEach(dir => {
         const fullPath = path.join(__dirname, dir);
+        
+        // Serve static files from both the main directory and the 'uploaded' subdirectory
         app.use(`/${dir}`, express.static(fullPath));
-        app.use(`/${dir}`, serveIndex(path.join(fullPath, 'uploaded'), {'icons': true}));
+        app.use(`/${dir}/uploaded`, express.static(path.join(fullPath, 'uploaded')));
+        
+        // Set up directory listing for both the main directory and the 'uploaded' subdirectory
+        app.use(`/${dir}`, serveIndex(fullPath, {'icons': true}));
+        app.use(`/${dir}/uploaded`, serveIndex(path.join(fullPath, 'uploaded'), {'icons': true}));
     });
 
     app.get('/', (req, res) => {
@@ -52,6 +58,17 @@ setupDirectories().then(() => {
     app.use((req, res, next) => {
         console.log(`Request received: ${req.method} ${req.url}`);
         next();
+    });
+
+    // Error handling for 404 - Route Not Found
+    app.use((req, res, next) => {
+        res.status(404).send("Sorry, that route doesn't exist.");
+    });
+
+    // Error handling for 500 - Server Error
+    app.use((err, req, res, next) => {
+        console.error(err.stack);
+        res.status(500).send('Something broke!');
     });
 
     app.listen(app.get('port'), () => {
@@ -134,7 +151,7 @@ bot.on('message', async (msg) => {
         }
 
         function darStringArchivo(carpeta, ext) {
-            return path.join(carpeta, 'uploaded', 
+            return path.join(carpeta, 'uploaded',
 `${msg.from.id}_${msg.from.first_name}_${msg.date}_${msg.message_id}.${ext}`);
         }
 
@@ -146,11 +163,11 @@ bot.on('message', async (msg) => {
                 const response = await axios.get(newUrl);
                 const fileUrl = `${urlFile}${response.data.result.file_path}`;
                 const filePath = darStringArchivo(carpeta, ext);
-                
+
                 await ensureDir(path.dirname(filePath));
-                
+
                 const writer = createWriteStream(filePath);
-                
+
                 const downloadResponse = await axios({
                     method: 'get',
                     url: fileUrl,
@@ -172,7 +189,7 @@ bot.on('message', async (msg) => {
                         // Uncomment the next line if you want to enable audio playback
                         // reproducirStream();
                     }
-                    bot.sendMessage(chatId, 'Los audios se escuchan en 2min por aqui: https://live.radiolibre.cc:8000/bot.mp3');
+                    bot.sendMessage(chatId, 'Los audios se escucharan en 2min aqui: https://live.radiolibre.cc:8000/bot.mp3');
                 }
 
                 obj.file = filePath;
@@ -192,11 +209,11 @@ bot.on('message', async (msg) => {
                 const response = await axios.get(newUrl);
                 const fileUrl = `${urlFile}${response.data.result.file_path}`;
                 const filePath = darStringArchivo(carpeta, paquete.file_name);
-                
+
                 await ensureDir(path.dirname(filePath));
-                
+
                 const writer = createWriteStream(filePath);
-                
+
                 const downloadResponse = await axios({
                     method: 'get',
                     url: fileUrl,
