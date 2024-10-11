@@ -26,133 +26,133 @@
 
         .header {
             width: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            padding: 10px;
             box-sizing: border-box;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
         }
 
         .ascii-logo {
             font-family: 'Courier New', Courier, monospace;
             color: white;
-            font-size: 14px;
+            font-size: 22px;
             line-height: 1.2;
             white-space: pre;
             text-align: center;
             overflow-x: auto;
         }
-
+/* Bloque de numero de envios */
         #info {
-            font-size: 5vmin;
-            line-height: 1.2;
+            font-size: 2vmin;
+            line-height: 1;
             text-align: center;
             color: white;
-            margin: 5vmin;
+            margin: 3vmin;
             max-width: 90vw;
             word-wrap: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 10px;
+            background-color: rgba(0, 0, 0, .65);
+            padding: 15px;
+            border-radius: 8px;
         }
-
+/* Botones de navegacion aqui abajo */
         #tipo_carpeta {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             align-items: center;
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 3vmin;
-            border-radius: 3vmin;
+            background-color: rgba(0, 0, 0, 0.15);
+            padding: 2vmin;
+            border-radius: 2vmin;
             max-width: 90vw;
-            margin-top: 5vmin;
+            margin-top: 3vmin;
         }
 
         #tipo_carpeta .item {
             padding: 1vmin 2vmin;
             margin: 1vmin;
-            background: linear-gradient(45deg, var(--color1), var(--color2), var(--color3));
+            background: linear-gradient(45deg, var(--color1), var(--color4), var(--color5));
             text-decoration: none;
             color: white;
-            line-height: 1.2;
-            border-radius: 3vmin;
-            font-weight: bold;
+            line-height: 1;
+            border-radius: 2vmin;
+            font-weight: normal;
             text-transform: uppercase;
             letter-spacing: 0.1vmin;
             transition: all 0.3s ease;
-            box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.2);
-            font-size: calc(10px + 1vw);
+            box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.1);
+            font-size: calc(8px + 1vw);
             text-align: center;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 5vmin;
+            min-height: 2vmin;
         }
 
         #tipo_carpeta .item:nth-child(2n) {
-            background: linear-gradient(45deg, var(--color3), var(--color4), var(--color5));
+            background: linear-gradient(45deg, var(--color5), var(--color1), var(--color4));
         }
 
         #tipo_carpeta .item:hover {
             transform: translateY(-0.3vmin) scale(1.05);
-            box-shadow: 0 0.8vmin 1.5vmin rgba(0, 0, 0, 0.3);
+            box-shadow: 0 0.8vmin 1.5vmin rgba(0, 0, 0, 4);
             filter: brightness(1.1);
         }
-
+/* Contenido enviado como texto */
         #content {
             color: white;
-            background-color: rgba(0, 0, 0, 0.7);
+            background-color: rgba(0, 0, 0, 0.5);
             padding: 20px;
             border-radius: 10px;
             margin-top: 20px;
             max-width: 90vw;
         }
 
-        @media (max-width: 600px) {
+        @media (max-width: 500px) {
             .ascii-logo {
                 font-size: 10px;
             }
 
             #info {
-                font-size: 4vmin;
+                font-size: 1vmin;
             }
 
             #tipo_carpeta {
                 flex-direction: column;
                 align-items: stretch;
             }
-            
+
             #tipo_carpeta .item {
                 margin: 1vmin 0;
                 font-size: calc(12px + 1.5vw);
             }
         }
+        /* la linea id=info hala el numero de posts */
+        a { color: yellow; }
     </style>
 </head>
 <body>
-    <header class="header">
-        <pre class="ascii-logo">
-                                      
-                                           
-.                          . --.--         
-|   o               o      |   |           
-|   .   .-., .  .   .   .-.|   |   .-. .-. 
-|   |  (   | |  |   |  (   |   |  (   (.-' 
-`--' `- `-'| `--`--' `- `-'`---'-- `-' `--'
-          -|-                              
-           '                               
-        </pre>
-    </header>
-    <div id="info">
-    </div>
     <div id="tipo_carpeta">
+
         <a href="./foto/" class="item">Fotos</a>
         <a href="./documentos/" class="item">Documentos</a>
         <a href="./video/" class="item">Videos</a>
         <a href="./audio/uploaded/" class="item">Audios</a>
         <a href="./texto/" class="item">Textos</a>
     </div>
+    <div id="info">
+    </div>
     <ul id="content"></ul>
+    <header class="header">
+        <pre class="ascii-logo">
+                   _           .     _                  
+ .___    ___    ___/ `   __.   |   ` \ ___  .___    ___ 
+ /   \  /   `  /   | | .'   \  |   | |/   \ /   \ .'   `
+ |   ' |    | ,'   | | |    |  |   | |    ` |   ' |----'
+ /     `.__/| `___,' /  `._.' /\__ / `___,' /     `.___,
+                   `                                    
+        </pre>
+    </header>
 </body>
 </html>
