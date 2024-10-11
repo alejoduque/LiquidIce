@@ -34,7 +34,7 @@ Los audios son enviados, en orden de llegada a un streaming en Icecast<br> usand
 2. Las imagenes enviadas a traves de Telegram son archivadas en archive.org, por ejemplo: https://archive.org/details/fotoBot
 Igualmente almacena Texto, Documentos, Videos y Audios en archive.org https://archive.org/details/@wiki-opdlv <br>
 
-El código base desarrollado o integracion al bot de **Telegram** fue escrito por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la dirección de [alejoduque](https://github.com/alejoduque) con ayudas, aportes y comentarios en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2). Esta rama fue modificada por aduque y Claude para utilizar **LiquidSoap**, descartando cVLC de la version inicial ya que consumia todos los recursos de la **raspberryPi v3** haciendola inestable. Igualmente se realizaron multiples cambios en el archivo que corre node.
+El código base para la integracion del bot de **Telegram** fue escrito por [Néstor Andrés Peña](http://www.nestorandres.com) para el laboratorio #TodoEsRadio realizado en CKWEB bajo la dirección de [alejoduque](https://github.com/alejoduque) con ayudas, aportes y comentarios en desarrollo de [Juan kalashikov](https://github.com/kalashnikov2). Esta rama fue modificada por aduque para utilizar **LiquidSoap**, descartando cVLC de la version inicial ya que consumia todos los recursos de la **raspberryPi v3b** haciendola inestable. Igualmente se realizaron multiples cambios en el archivo que corre node y una actualizacion gracias a claude.ai.
 
 ```bash
 uptime
