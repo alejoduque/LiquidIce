@@ -77,9 +77,25 @@ Con las dependencias instaladas ya se puede correr el script con:
 node t2i.js
 ```
 
-En el directorio shell_scripts estan los archivos que se necesitan para terminar de configurar el sistema. Sirven como referencia para la ajustar cada uno de los servicios que corren automaticamene. Es necesario instalar LiquiSoap y agregar el .liq asi mismo ubicar los .sh en las carpetas de audio, foto, video, documentos y asegurarse de tener un crontab que los ejecute. En el bashrc estan las rutas a los scripts que ejecutan los servicios arriba mencionado de NodeJS.
+En el directorio shell_scripts estan los archivos que se necesitan para terminar de configurar el sistema. Sirven como referencia para la ajustar cada uno de los servicios que corren automaticamene. Es necesario instalar LiquiSoap y agregar el .liq asi mismo ubicar los .sh en las carpetas de audio, foto, video, documentos y asegurarse de tener un crontab que los ejecute. En el bashrc estan las rutas a los scripts que ejecutan los servicios arriba mencionados de NodeJS.
 
 
 ```bash
 audios2ice  bashrc  crontab_contents  liquidsoapliq  upa.sh  upd.sh  upf.sh  upv.sh
 ```
+
+Algunos otros comandos utiles para la configuracion, como arrancar la app de node desde el inicio (util si hay un corte de electricidad o se reinicia la rpi):
+
+
+```bash
+    sudo apt install dnsutils
+    dig manakai.radiolibre.cc
+    sudo npm install -g pm2
+    cd /home/patch/Desktop/LiquidIce/
+    pm2 start t2i.js
+    pm2 startup
+    sudo env PATH=$PATH:/usr/bin /usr/local/lib/node_modules/pm2/bin/pm2 startup systemd -u patch --hp /home/patch
+```
+
+
+
