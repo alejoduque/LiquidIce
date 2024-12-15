@@ -6,154 +6,92 @@
     <script type="text/javascript" src="./js/jquery.js"></script>
     <script type="text/javascript" src="./js/script.js"></script>
     <link rel="stylesheet" href="./css/style.css" media="all">
-    <style>
-        /* New styles to complement existing CSS */
-        :root {
-            --color1: #ff6b6b;
-            --color2: #4ecdc4;
-            --color3: #45b7d1;
-            --color4: #f7d354;
-            --color5: #ff8a5b;
-        }
-
-        body {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            min-height: 80vh;
-            padding-top: 10px;
-        }
-
-        .header {
-            width: 100%;
-            background-color: rgba(0, 0, 0, .75);
-            padding: 10px;
-            box-sizing: border-box;
-            margin-bottom: 50px;
-        }
-
-        .ascii-logo {
-            font-family: 'Courier New', Courier, monospace;
-            color: yellow;
-            font-size: 12px;
-            line-height: 1;
-            white-space: pre;
-            text-align: center;
-            overflow-x: auto;
-        }
-/* Bloque de numero de envios */
-        #info {
-            font-size: 2vmin;
-            line-height: 1;
-            text-align: center;
-            color: white;
-            margin: 3vmin;
-            max-width: 90vw;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            background-color: rgba(0, 0, 0, .6);
-            padding: 15px;
-            border-radius: 8px;
-        }
-/* Botones de navegacion aqui abajo */
-        #tipo_carpeta {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.15);
-            padding: 2vmin;
-            border-radius: 2vmin;
-            max-width: 90vw;
-            margin-top: 3vmin;
-        }
-
-        #tipo_carpeta .item {
-            padding: 1vmin 2vmin;
-            margin: 1vmin;
-            background: linear-gradient(45deg, var(--color1), var(--color4), var(--color5));
-            text-decoration: none;
-            color: black;
-            line-height: 1;
-            border-radius: 2vmin;
-            font-weight: normal;
-            text-transform: uppercase;
-            letter-spacing: 0.1vmin;
-            transition: all 0.3s ease;
-            box-shadow: 0 0.5vmin 1vmin rgba(0, 0, 0, 0.1);
-            font-size: calc(8px + 1vw);
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 2vmin;
-        }
-
-        #tipo_carpeta .item:nth-child(2n) {
-            background: linear-gradient(45deg, var(--color5), var(--color1), var(--color4));
-        }
-
-        #tipo_carpeta .item:hover {
-            transform: translateY(-0.3vmin) scale(1.05);
-            box-shadow: 0 0.8vmin 1.5vmin rgba(0, 0, 0, 4);
-            filter: brightness(1.1);
-        }
-/* Contenido enviado como texto */
-        #content {
-            color: white;
-            background-color: rgba(0, 0, 0, 0.5);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 20px;
-            max-width: 90vw;
-        }
-
-        @media (max-width: 800px) {
-            .ascii-logo {
-                font-size: 8px;
-            }
-
-            #info {
-                font-size: 1vmin;
-            }
-
-            #tipo_carpeta {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            #tipo_carpeta .item {
-                margin: 1vmin 0;
-                font-size: calc(12px + 1.5vw);
-            }
-        }
-        /* la linea id=info hala el numero de posts */
-        a { color: yellow; }
-    </style>
 </head>
 <body>
     <div id="tipo_carpeta">
-
         <a href="./foto/" class="item">Fotos</a>
         <a href="./documentos/" class="item">Documentos</a>
         <a href="./video/" class="item">Videos</a>
         <a href="./audio/uploaded/" class="item">Audios</a>
         <a href="./texto/" class="item">Textos</a>
     </div>
-    <div id="info">
-    </div>
+    <div id="info"></div>
     <ul id="content"></ul>
     <header class="header">
         <pre class="ascii-logo">
-                   _           .     _                  
- .___    ___    ___/ `   __.   |   ` \ ___  .___    ___ 
- /   \  /   `  /   | | .'   \  |   | |/   \ /   \ .'   `
- |   ' |    | ,'   | | |    |  |   | |    ` |   ' |----'
- /     `.__/| `___,' /  `._.' /\__ / `___,' /     `.___,
-                   `                                    
+          .  .   .-.   . .   .-.   . .   .-.   .-.
+          |\/|   |-|   |\|   |-|   |<    |-|    |
+          '  `   ` '   ' `   ` '   ' `   ` '   `-'
           <a href="https://github.com/alejoduque/LiquidIce">software > alejoduque/LiquidIce</a>
         </pre>
     </header>
+    <script>
+        function convertUrlsToLinks(text) {
+            const urlRegex = /(https?:\/\/[^\s]+)/g;
+            return text.replace(urlRegex, (url) => {
+                return `<a href="${url}" target="_blank">${url}</a>`;
+            });
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp * 1000);
+            return date.toLocaleString();
+        }
+
+        async function loadMessages() {
+            try {
+                const response = await fetch('/datos.json');
+                const data = await response.json();
+
+                const content = document.getElementById('content');
+                const info = document.getElementById('info');
+
+                // Sort messages by date in descending order
+                data.sort((a, b) => b.date - a.date);
+
+                // Update info with total number of messages
+                info.textContent = `Total de mensajes: ${data.length}`;
+
+                // Clear previous content
+                content.innerHTML = '';
+
+                // Render messages
+                data.forEach(msg => {
+                    const li = document.createElement('li');
+
+                    // Determine message content based on type
+                    let messageContent = '';
+                    switch(msg.type) {
+                        case 'texto': messageContent = convertUrlsToLinks(msg.file);
+                            break;
+                        case 'foto':
+                            messageContent = `Foto enviada: <a href="${msg.file}" target="_blank">Ver imagen</a>`;
+                            break;
+                        case 'video':
+                            messageContent = `Video enviado: <a href="${msg.file}" target="_blank">Ver video</a>`;
+                            break;
+                        case 'audio':
+                            messageContent = `Audio enviado: <a href="${msg.file}" target="_blank">Escuchar audio</a>`;
+                            break;
+                        case 'documentos':
+                            messageContent = `Documento enviado: <a href="${msg.file}" target="_blank">Abrir documento</a>`;
+                            break;
+                    }
+
+                    li.innerHTML = `
+                        <strong>${msg.from_name}</strong> (${formatDate(msg.date)}):
+                        <br>${messageContent}
+                    `;
+
+                    content.appendChild(li);
+                });
+            } catch (error) {
+                console.error('Error loading messages:', error);
+            }
+        }
+
+        // Load messages when the page loads
+        document.addEventListener('DOMContentLoaded', loadMessages);
+    </script>
 </body>
 </html>
