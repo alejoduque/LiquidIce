@@ -1,37 +1,29 @@
+/* General body styling */
 body {
-    background-color: #000;
-    background-image: url('19201280aulladores.jpg');
-    background-size: cover;
-    background-position: center;
-    background-attachment: fixed;
-    color: #0F0;
-    font-family: 'Courier New', Courier, monospace;
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
-    font-size: 20px;
-    cursor: crosshair;
-    overflow-x: hidden;
-    position: relative;
+    background-color: #A2CFA5; /* Randomized color */
+    background-image: url('19201280aulladores.jpg'); /* Background image */
+    background-size: cover; /* Cover full background */
+    background-position: center; /* Center the background image */
+    background-attachment: fixed; /* Fixed background image */
+    color: #FAF3DD; /* Randomized color */
+    font-family: 'Courier New', Courier, monospace; /* Monospace font for a natural look */
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    line-height: 1.6; /* Slightly increased line-height for readability */
+    font-size: 18px; /* Adjusted font size */
+    cursor: default; /* Default cursor */
+    overflow-x: hidden; /* Hide horizontal overflow */
+    position: relative; /* Relative position for layering */
 }
 
+/* Apply box-sizing to all elements */
 * {
-    box-sizing: border-box;
-    scrollbar-color: #0F0 #000;
-    scrollbar-width: thin;
+    box-sizing: border-box; /* Ensure padding and borders are included in element's total width and height */
+    scrollbar-color: #FAF3DD #A2CFA5; /* Randomized scrollbar colors */
+    scrollbar-width: thin; /* Thin scrollbar */
 }
 
-/* Glitch-like text effect */
-@keyframes glitch {
-    0% { transform: translate(0, 0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(-2px, -2px); }
-    60% { transform: translate(2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0, 0); }
-}
-
-/* Randomized background noise */
+/* Randomized background noise (Optional, can be removed for a cleaner look) */
 body::before {
     content: "";
     position: fixed;
@@ -42,7 +34,7 @@ body::before {
     width: 200%;
     height: 200%;
     background: transparent url('data:image/png;base64,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');
-    opacity: 0.05;  /* Slightly reduced opacity for better background visibility */
+    opacity: 0.02;  /* Reduced opacity for better text visibility */
     pointer-events: none;
     animation: noise 1s steps(5) infinite;
     z-index: 1;
@@ -63,16 +55,17 @@ body::before {
     100% { transform: translate(0,0); }
 }
 
+/* Link styling */
 a {
-    color: #0F0;
-    text-decoration: none;
-    position: relative;
-    transition: all 0.2s ease;
+    color: #FFC857; /* Randomized color for links */
+    text-decoration: none; /* Remove underline */
+    position: relative; /* Position relative for pseudo-elements */
+    transition: all 0.2s ease; /* Smooth transition */
 }
 
 a:hover {
-    color: #0A0;
-    animation: glitch 0.3s infinite;
+    color: #FF6B6B; /* Randomized hover color */
+    animation: glitch 0.3s infinite; /* Optional glitch effect */
 }
 
 a::before {
@@ -82,81 +75,91 @@ a::before {
     left: 0;
     width: 0;
     height: 1px;
-    background-color: #0F0;
-    transition: width 0.3s ease;
+    background-color: #FFC857; /* Same color */
+    transition: width 0.3s ease; /* Smooth transition */
 }
 
 a:hover::before {
-    width: 100%;
+    width: 100%; /* Underline expands on hover */
 }
 
+/* Folder block */
 #tipo_carpeta {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    padding: 20px;
-    background-color: rgba(0,0,0,0.8);
+    display: flex; /* Flexbox layout */
+    flex-wrap: wrap; /* Wrap items */
+    justify-content: center; /* Center items */
+    gap: 10px; /* Gap between items */
+    padding: 20px; /* Padding around container */
+    background-color: rgba(60, 90, 100, 0.5); /* Randomized color with 50% opacity */
 }
 
+/* Folder items */
 #tipo_carpeta .item {
-    border: 1px solid #0F0;
-    padding: 5px 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    transition: all 0.3s ease;
+    border: 1px solid #FF6B6B; /* Randomized color for border */
+    padding: 5px 10px; /* Padding inside items */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 2px; /* Spacing between letters */
+    background-color: rgba(255, 255, 255, 0.8); /* Light background color to make them more visible */
+    color: #000; /* Black text color for contrast */
+    transition: all 0.3s ease; /* Smooth transition */
 }
 
 #tipo_carpeta .item:hover {
-    background-color: #0F0;
-    color: #000;
-    transform: skew(-10deg);
+    background-color: #FF6B6B; /* Randomized background color on hover */
+    color: #000; /* Black text */
+    transform: translateY(-5px); /* Lift item on hover */
 }
 
+/* Main text block */
 #content {
-    background-color: rgba(0,0,0,0.7);
-    border: 1px solid #0F0;
-    padding: 20px;
-    margin: 20px;
-    width: calc(100% - 40px); /* Changed from max-width to width */
-    max-width: 100%; /* Added to ensure it's responsive */
-    box-sizing: border-box; /* Ensures padding is included in width calculation */
+    background-color: rgba(60, 90, 100, 0.5); /* Randomized color with 50% opacity */
+    border: 1px solid #FF6B6B; /* Randomized color for border */
+    padding: 20px; /* Padding inside container */
+    margin: 20px; /* Margin outside container */
+    width: calc(100% - 40px); /* Adjust width */
+    max-width: 100%; /* Ensure responsiveness */
+    box-sizing: border-box; /* Include padding in width calculation */
+    text-shadow: 2px 2px 4px #000000; /* Black shadow for text */
 }
 
+/* List items inside content */
 #content li {
-    border-bottom: 1px dotted #0F0;
-    padding: 10px 0;
+    border-bottom: 1px dotted #FF6B6B; /* Randomized color for border */
+    padding: 10px 0; /* Padding inside list items */
 }
 
+/* ASCII logo block */
 .header {
-    background-color: rgba(0,0,0,0.9);
-    padding: 10px;
-    text-align: center;
+    background-color: rgba(60, 90, 100, 0.5); /* Randomized color with 50% opacity */
+    padding: 10px; /* Padding inside header */
+    text-align: center; /* Centered text */
 }
 
+/* ASCII logo styling */
 .ascii-logo {
-    white-space: pre;
-    color: #0F0;
+    white-space: pre; /* Preserve whitespace */
+    color: #FFC857; /* Randomized color */
 }
 
+/* Responsive design */
 @media (max-width: 600px) {
     body {
-        font-size: 16px; /* Increased from 12px for better readability */
+        font-size: 16px; /* Smaller font size for small screens */
     }
 
     #content {
-        margin: 10px; /* Reduced margin on smaller screens */
-        padding: 15px; /* Slightly reduced padding */
-        width: calc(100% - 20px); /* Adjusted for smaller margin */
+        margin: 10px; /* Smaller margin for small screens */
+        padding: 15px; /* Smaller padding for small screens */
+        width: calc(100% - 20px); /* Adjust width for small screens */
     }
 
     #tipo_carpeta {
-        flex-direction: column;
-        align-items: stretch;
+        flex-direction: column; /* Stack items vertically on small screens */
+        align-items: stretch; /* Stretch items to fill container */
     }
 
     #content li {
-        padding: 8px 0; /* Slightly reduced padding */
-        font-size: 14px; /* Slightly smaller font size for list items */
+        padding: 8px 0; /* Smaller padding for list items */
+        font-size: 14px; /* Smaller font size for list items */
     }
 }
