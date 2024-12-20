@@ -9,7 +9,7 @@ body {
     font-family: 'Courier New', Courier, monospace; /* Monospace font for a natural look */
     margin: 0; /* Remove default margin */
     padding: 0; /* Remove default padding */
-    line-height: 1.6; /* Slightly increased line-height for readability */
+    line-height: 1.1; /* Slightly increased line-height for readability */
     font-size: 18px; /* Adjusted font size */
     cursor: default; /* Default cursor */
     overflow-x: hidden; /* Hide horizontal overflow */
@@ -64,7 +64,7 @@ a {
 }
 
 a:hover {
-    color: #FF6B6B; /* Randomized hover color */
+    color: #2ff22c; /* Randomized hover color */
     animation: glitch 0.3s infinite; /* Optional glitch effect */
 }
 
@@ -95,24 +95,24 @@ a:hover::before {
 
 /* Folder items */
 #tipo_carpeta .item {
-    border: 1px solid #FF6B6B; /* Randomized color for border */
+    border: 1px solid #3456ed; /* Randomized color for border */
     padding: 5px 10px; /* Padding inside items */
     text-transform: uppercase; /* Uppercase text */
     letter-spacing: 2px; /* Spacing between letters */
-    background-color: rgba(255, 255, 255, 0.8); /* Light background color to make them more visible */
+    background-color: rgb(238 190 1 / 65%); /* Light background color to make them more visible */
     color: #000; /* Black text color for contrast */
     transition: all 0.3s ease; /* Smooth transition */
 }
 
 #tipo_carpeta .item:hover {
-    background-color: #FF6B6B; /* Randomized background color on hover */
+    background-color: #54deb5; /* Randomized background color on hover */
     color: #000; /* Black text */
     transform: translateY(-5px); /* Lift item on hover */
 }
 
 /* Main text block */
 #content {
-    background-color: rgba(60, 90, 100, 0.5); /* Randomized color with 50% opacity */
+    background-color: rgba(10, 90, 100, 0.5); /* Randomized color with 50% opacity */
     border: 1px solid #FF6B6B; /* Randomized color for border */
     padding: 20px; /* Padding inside container */
     margin: 20px; /* Margin outside container */
