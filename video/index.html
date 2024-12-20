@@ -1,1 +1,266 @@
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>M A N A K A I - R E S E R V A - C O L O M B I A</title>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
+    <link rel="stylesheet" href="../css/style.css" media="all">
+    <style>
+        .thumbnail-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .thumbnail-container {
+            position: relative;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+            background: #000; /* Dark background for video containers */
+        }
+        .thumbnail-gallery video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid #00f;
+            border-radius: 2px;
+            transition: transform 0.2s;
+            background: #000;
+            padding: 2px;
+            cursor: pointer;
+        }
+        .thumbnail-gallery video:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,255,0.2);
+            border-color: #00f;
+        }
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .play-icon::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 16px;
+            border-color: transparent transparent transparent white;
+            margin-left: 4px;
+        }
+        .thumbnail-container.error {
+            background: #ffebee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .thumbnail-container.error::after {
+            content: "⚠️ Error";
+            color: #b71c1c;
+            font-size: 12px;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 12px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="tipo_carpeta">
+        <a href="../foto/" class="item">Fotos</a>
+        <a href="../documentos/" class="item">Documentos</a>
+        <a href="../video/" class="item">Videos</a>
+        <a href="../audio/" class="item">Audios</a>
+        <a href="../texto/" class="item">Textos</a>
+    </div>
+
+    <div id="info"></div>
+    <ul id="content"></ul>
+
+    <div class="container">
+        <div id="thumbnailGallery" class="thumbnail-gallery"></div>
+    </div>
+
+    <header class="header">
+        <a href="../" id="back-link">← Volver al índice</a>
+        <pre class="ascii-logo">
+        .  .   .-.   . .   .-.   . .   .-.   .-.
+        |\/|   |-|   |\|   |-|   |<    |-|    |
+        '  `   ` '   ' `   ` '   ' `   ` '   `-'
+        <a href="https://github.com/alejoduque/LiquidIce">software > alejoduque/LiquidIce</a>
+        </pre>
+    </header>
+
+    <script>
+        function createVideoThumbnail(video) {
+            return new Promise((resolve, reject) => {
+                // Show loading state
+                const loadingText = document.createElement('div');
+                loadingText.className = 'loading';
+                loadingText.textContent = 'Generating preview...';
+                video.parentElement.appendChild(loadingText);
+
+                // Force video to load the first frame
+                video.currentTime = 0.1;
+
+                video.addEventListener('seeked', function() {
+                    try {
+                        const canvas = document.createElement('canvas');
+                        canvas.width = video.videoWidth;
+                        canvas.height = video.videoHeight;
+                        const ctx = canvas.getContext('2d');
+                        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                        const thumbnailUrl = canvas.toDataURL('image/jpeg', 0.7);
+                        video.poster = thumbnailUrl;
+                        
+                        // Remove loading text
+                        loadingText.remove();
+                        resolve(thumbnailUrl);
+                    } catch (error) {
+                        loadingText.remove();
+                        reject(error);
+                    }
+                }, { once: true });
+
+                video.addEventListener('error', (e) => {
+                    loadingText.remove();
+                    reject(new Error(`Failed to load video: ${e.message}`));
+                });
+
+                // Set a timeout
+                setTimeout(() => {
+                    loadingText.remove();
+                    reject(new Error('Thumbnail generation timeout'));
+                }, 10000);
+            });
+        }
+
+        function formatDate(timestamp) {
+            const date = new Date(timestamp * 1000);
+            return date.toLocaleString();
+        }
+
+        function loadMessages() {
+            fetch('../datos.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Loaded messages data:', data);
+                    const content = document.getElementById('content');
+                    const filteredData = data.filter(msg => msg.type.toLowerCase() === 'video');
+
+                    console.log(`Found ${filteredData.length} videos`);
+                    
+                    filteredData.sort((a, b) => b.date - a.date);
+                    content.innerHTML = '';
+
+                    filteredData.forEach(msg => {
+                        const li = document.createElement('li');
+                        const fileUrl = msg.file;
+                        li.innerHTML = `<strong>${msg.from_name}</strong> (${formatDate(msg.date)}): <br>` +
+                                     `Video: <a href="${fileUrl}" target="_blank">Ver video</a>`;
+                        content.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading messages:', error);
+                    document.getElementById('info').innerHTML = 
+                        `<div class="error">Error loading messages: ${error.message}</div>`;
+                });
+        }
+
+        function loadThumbnails() {
+            fetch('../datos.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Loading thumbnails, data:', data);
+                    const gallery = document.getElementById('thumbnailGallery');
+                    
+                    // Filter only videos
+                    const videoEntries = data.filter(entry => 
+                        entry.type.toLowerCase() === 'video' && 
+                        entry.file.toLowerCase().match(/\.(mp4|m4v|webm)$/i)
+                    );
+
+                    console.log(`Found ${videoEntries.length} video entries`);
+                    gallery.innerHTML = '';
+
+                    videoEntries.forEach(entry => {
+                        const fileUrl = entry.file;
+                        console.log('Processing video:', fileUrl);
+
+                        const container = document.createElement('div');
+                        container.className = 'thumbnail-container';
+
+                        const video = document.createElement('video');
+                        video.src = fileUrl;
+                        video.preload = 'metadata';
+                        video.muted = true; // Required for autoplay
+                        video.playsInline = true; // Better mobile support
+
+                        // Create and append play icon
+                        const playIcon = document.createElement('div');
+                        playIcon.className = 'play-icon';
+                        container.appendChild(playIcon);
+
+                        // Generate thumbnail as soon as metadata is loaded
+                        video.addEventListener('loadedmetadata', () => {
+                            createVideoThumbnail(video).catch(error => {
+                                console.error('Error generating thumbnail:', error);
+                                container.classList.add('error');
+                            });
+                        });
+
+                        video.addEventListener('error', (e) => {
+                            console.error('Error loading video:', fileUrl, e);
+                            container.classList.add('error');
+                        });
+
+                        // Open video in new tab when clicked
+                        container.onclick = () => window.open(fileUrl, '_blank');
+
+                        container.appendChild(video);
+                        gallery.appendChild(container);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading thumbnails:', error);
+                    document.getElementById('thumbnailGallery').innerHTML = 
+                        `<div class="error">Error loading gallery: ${error.message}</div>`;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, initializing...');
+            loadMessages();
+            loadThumbnails();
+        });
+    </script>
+</body>
+</html>
