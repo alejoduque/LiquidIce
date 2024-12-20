@@ -53,8 +53,7 @@ uptime
 
 ```
 
-<img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" width="440" height="280"/> <br>
-<img src="running state dic2024.jpg" width="440" height="280"/> <br>
+<img src="running state dic2024.jpg" width="640" height="480"/> <img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" width="640" height="480"/> <br>
 
 ### Corre desde una raspberryPi v3b en adelante:
 
