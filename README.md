@@ -54,7 +54,11 @@ uptime
 ```
 
 <img src="https://i.pinimg.com/originals/fb/af/14/fbaf1432d8db6ba159a61173ea21b957.gif" width="440" height="280"/> <br>
+<img src="running state dic2024.jpg" width="440" height="280"/> <br>
+
 ### Corre desde una raspberryPi v3b en adelante:
+
+
 
 ## Pasos a seguir para correr una instancia en un computador con Node.js instalado
 
