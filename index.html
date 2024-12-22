@@ -3,34 +3,134 @@
 <head>
     <meta charset="UTF-8">
     <title>M A N A K A I - R E S E R V A - C O L O M B I A</title>
-    <script type="text/javascript" src="./js/jquery.js"></script>
-    <script type="text/javascript" src="./js/script.js"></script>
-    <link rel="stylesheet" href="./css/style.css" media="all">
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/script.js"></script>
+    <link rel="stylesheet" href="../css/style.css" media="all">
+    <style>
+        .thumbnail-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        .thumbnail-container {
+            position: relative;
+            overflow: hidden;
+            width: 150px;
+            height: 150px;
+        }
+        .thumbnail-gallery img,
+        .thumbnail-gallery video,
+        .thumbnail-gallery .audio-container,
+        .thumbnail-gallery .document-container {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: 1px solid #00f;
+            border-radius: 2px;
+            transition: transform 0.2s;
+            background: #ff8c00;
+            padding: 2px;
+            cursor: pointer;
+        }
+        .thumbnail-gallery img:hover,
+        .thumbnail-gallery video:hover,
+        .thumbnail-gallery .audio-container:hover,
+        .thumbnail-gallery .document-container:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 10px rgba(0,0,255,0.2);
+            border-color: #00f;
+        }
+        .play-icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .play-icon::after {
+            content: "";
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 16px;
+            border-color: transparent transparent transparent white;
+            margin-left: 4px;
+        }
+        .audio-container, .document-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #f0f0f0 !important;
+            text-align: center;
+            padding: 10px !important;
+        }
+        .audio-icon, .document-icon {
+            font-size: 40px;
+            margin-bottom: 5px;
+        }
+        .file-name {
+            font-size: 12px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 90%;
+        }
+        .thumbnail-container.error {
+            background: #ffebee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .thumbnail-container.error::after {
+            content: "⚠️ Error";
+            color: #b71c1c;
+            font-size: 12px;
+        }
+    </style>
 </head>
 <body>
+    <!-- Keep existing body structure -->
     <div id="tipo_carpeta">
-        <a href="./foto/" class="item">Fotos</a>
-        <a href="./documentos/" class="item">Documentos</a>
-        <a href="./video/" class="item">Videos</a>
-        <a href="./audio/uploaded/" class="item">Audios</a>
-        <a href="./texto/" class="item">Textos</a>
+        <a href="../foto/" class="item">Fotos</a>
+        <a href="../documentos/" class="item">Documentos</a>
+        <a href="../video/" class="item">Videos</a>
+        <a href="../audio/" class="item">Audios</a>
+        <a href="../texto/" class="item">Textos</a>
     </div>
+
     <div id="info"></div>
     <ul id="content"></ul>
+
+    <div class="container">
+        <div id="thumbnailGallery" class="thumbnail-gallery"></div>
+    </div>
+
     <header class="header">
+        <a href="../" id="back-link">← Volver al índice</a>
         <pre class="ascii-logo">
-          .  .   .-.   . .   .-.   . .   .-.   .-.
-          |\/|   |-|   |\|   |-|   |<    |-|    |
-          '  `   ` '   ' `   ` '   ' `   ` '   `-'
-          <a href="https://github.com/alejoduque/LiquidIce">software > alejoduque/LiquidIce</a>
+        .  .   .-.   . .   .-.   . .   .-.   .-.
+        |\/|   |-|   |\|   |-|   |<    |-|    |
+        '  `   ` '   ' `   ` '   ' `   ` '   `-'
+        <a href="https://github.com/alejoduque/LiquidIce">software > alejoduque/LiquidIce</a>
         </pre>
     </header>
+
     <script>
-        function convertUrlsToLinks(text) {
-            const urlRegex = /(https?:\/\/[^\s]+)/g;
-            return text.replace(urlRegex, (url) => {
-                return `<a href="${url}" target="_blank">${url}</a>`;
-            });
+        // Keep existing helper functions
+        function createVideoThumbnail(videoElement) {
+            // ... (keep existing function as is)
         }
 
         function formatDate(timestamp) {
@@ -38,60 +138,165 @@
             return date.toLocaleString();
         }
 
-        async function loadMessages() {
-            try {
-                const response = await fetch('/datos.json');
-                const data = await response.json();
+        function loadMessages() {
+            fetch('../datos.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Loaded messages data:', data);
+                    const content = document.getElementById('content');
+                    const currentFolder = window.location.pathname.split('/').filter(Boolean).pop();
+                    const filteredData = data.filter(msg => msg.type.toLowerCase() === currentFolder.toLowerCase());
 
-                const content = document.getElementById('content');
-                const info = document.getElementById('info');
+                    console.log(`Found ${filteredData.length} items for type: ${currentFolder}`);
 
-                // Sort messages by date in descending order
-                data.sort((a, b) => b.date - a.date);
+                    filteredData.sort((a, b) => b.date - a.date);
+                    content.innerHTML = '';
 
-                // Update info with total number of messages
-                info.textContent = `Total de mensajes: ${data.length}`;
+                    filteredData.forEach(msg => {
+                        const li = document.createElement('li');
+                        const fileUrl = msg.file;
+                        let messageContent = '';
 
-                // Clear previous content
-                content.innerHTML = '';
+                        switch(msg.type.toLowerCase()) {
+                            case 'foto':
+                                messageContent = `Foto enviada: <a href="${fileUrl}" target="_blank">Ver imagen</a>`;
+                                break;
+                            case 'video':
+                                messageContent = `Video enviado: <a href="${fileUrl}" target="_blank">Ver video</a>`;
+                                break;
+                            case 'audio':
+                                messageContent = `Audio enviado: <a href="${fileUrl}" target="_blank">Escuchar audio</a>`;
+                                break;
+                            case 'documentos':
+                                messageContent = `Documento enviado: <a href="${fileUrl}" target="_blank">Abrir documento</a>`;
+                                break;
+                            default:
+                                messageContent = `Archivo: <a href="${fileUrl}" target="_blank">${msg.file}</a>`;
+                        }
 
-                // Render messages
-                data.forEach(msg => {
-                    const li = document.createElement('li');
-
-                    // Determine message content based on type
-                    let messageContent = '';
-                    switch(msg.type) {
-                        case 'texto': messageContent = convertUrlsToLinks(msg.file);
-                            break;
-                        case 'foto':
-                            messageContent = `Foto enviada: <a href="${msg.file}" target="_blank">Ver imagen</a>`;
-                            break;
-                        case 'video':
-                            messageContent = `Video enviado: <a href="${msg.file}" target="_blank">Ver video</a>`;
-                            break;
-                        case 'audio':
-                            messageContent = `Audio enviado: <a href="${msg.file}" target="_blank">Escuchar audio</a>`;
-                            break;
-                        case 'documentos':
-                            messageContent = `Documento enviado: <a href="${msg.file}" target="_blank">Abrir documento</a>`;
-                            break;
-                    }
-
-                    li.innerHTML = `
-                        <strong>${msg.from_name}</strong> (${formatDate(msg.date)}):
-                        <br>${messageContent}
-                    `;
-
-                    content.appendChild(li);
+                        li.innerHTML = `<strong>${msg.from_name}</strong> (${formatDate(msg.date)}): <br>${messageContent}`;
+                        content.appendChild(li);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading messages:', error);
+                    document.getElementById('info').innerHTML =
+                        `<div class="error">Error loading messages: ${error.message}</div>`;
                 });
-            } catch (error) {
-                console.error('Error loading messages:', error);
-            }
         }
 
-        // Load messages when the page loads
-        document.addEventListener('DOMContentLoaded', loadMessages);
+        function loadThumbnails() {
+            fetch('../datos.json')
+                .then(response => {
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Loading thumbnails, data:', data);
+                    const gallery = document.getElementById('thumbnailGallery');
+                    const currentFolder = window.location.pathname.split('/').filter(Boolean).pop();
+
+                    const entries = data.filter(entry => {
+                        const isImage = entry.file.toLowerCase().match(/\.(jpg|jpeg|png|gif)$/i) && entry.type.toLowerCase() === 'foto';
+                        const isVideo = entry.file.toLowerCase().match(/\.(mp4|m4v|webm)$/i) && entry.type.toLowerCase() === 'video';
+                        const isAudio = entry.file.toLowerCase().match(/\.(mp3|wav|ogg)$/i) && entry.type.toLowerCase() === 'audio';
+                        const isDocument = entry.file.toLowerCase().match(/\.(pdf|doc|docx|txt)$/i) && entry.type.toLowerCase() === 'documentos';
+                        return isImage || isVideo || isAudio || isDocument;
+                    });
+
+                    console.log('Filtered entries:', entries);
+                    gallery.innerHTML = '';
+
+                    entries.forEach(entry => {
+                        const fileUrl = entry.file;
+                        const fileName = entry.file.split('/').pop();
+                        console.log('Processing entry:', entry);
+
+                        const container = document.createElement('div');
+                        container.className = 'thumbnail-container';
+
+                        if (entry.type.toLowerCase() === 'foto') {
+                            const img = document.createElement('img');
+                            img.src = fileUrl;
+                            img.alt = fileName;
+                            img.onclick = () => window.open(fileUrl, '_blank');
+
+                            img.onerror = () => {
+                                container.classList.add('error');
+                                console.error('Error loading image:', fileUrl);
+                            };
+
+                            container.appendChild(img);
+                        } else if (entry.type.toLowerCase() === 'video') {
+                            const video = document.createElement('video');
+                            video.src = fileUrl;
+                            video.preload = 'metadata';
+
+                            const thumbnailUrl = fileUrl.replace(/\.(mp4|m4v|webm)$/i, '.jpg');
+                            const img = new Image();
+                            img.src = thumbnailUrl;
+
+                            img.onload = () => {
+                                video.poster = thumbnailUrl;
+                            };
+
+                            img.onerror = () => {
+                                createVideoThumbnail(video).catch(error => {
+                                    console.error('Error generating thumbnail:', error);
+                                    container.classList.add('error');
+                                });
+                            };
+
+                            video.onclick = () => window.open(fileUrl, '_blank');
+
+                            video.onerror = (e) => {
+                                console.error('Error loading video:', fileUrl, e);
+                                container.classList.add('error');
+                            };
+
+                            const playIcon = document.createElement('div');
+                            playIcon.className = 'play-icon';
+
+                            container.appendChild(video);
+                            container.appendChild(playIcon);
+                        } else if (entry.type.toLowerCase() === 'audio') {
+                            const audioContainer = document.createElement('div');
+                            audioContainer.className = 'audio-container';
+                            audioContainer.innerHTML = `
+                                <div class="audio-icon">🎵</div>
+                                <div class="file-name">${fileName}</div>
+                            `;
+                            audioContainer.onclick = () => window.open(fileUrl, '_blank');
+                            container.appendChild(audioContainer);
+                        } else if (entry.type.toLowerCase() === 'documentos') {
+                            const docContainer = document.createElement('div');
+                            docContainer.className = 'document-container';
+                            docContainer.innerHTML = `
+                                <div class="document-icon">📄</div>
+                                <div class="file-name">${fileName}</div>
+                            `;
+                            docContainer.onclick = () => window.open(fileUrl, '_blank');
+                            container.appendChild(docContainer);
+                        }
+
+                        gallery.appendChild(container);
+                    });
+                })
+                .catch(error => {
+                    console.error('Error loading thumbnails:', error);
+                    document.getElementById('thumbnailGallery').innerHTML =
+                        `<div class="error">Error loading gallery: ${error.message}</div>`;
+                });
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Page loaded, initializing...');
+            loadMessages();
+            loadThumbnails();
+        });
     </script>
 </body>
 </html>
