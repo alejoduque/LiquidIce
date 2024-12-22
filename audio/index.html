@@ -1,1 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>M A N A K A I - R E S E R V A - C O L O M B I A</title>
+    <script type="text/javascript" src="../jquery.js"></script>
+    <script type="text/javascript" src="../script.js"></script>
+    <link rel="stylesheet" href="../css/style.css" media="all">
+    <style>
+        .audio-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            margin: 20px 0;
+        }
 
+        .audio-item {
+            width: 200px;
+            /* Transparent black background - adjust the last value (0.6) to change opacity */
+            /* 0.0 = fully transparent, 1.0 = fully opaque */
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+            transition: transform 0.2s;
+        }
+
+        .audio-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.4);
+        }
+
+        .audio-icon {
+            width: 100%;
+            height: 100px;
+            /* Slightly darker transparent background for the icon area */
+            /* Adjust the last value (0.7) to change opacity */
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin: 10px 0;
+        }
+
+        .audio-info {
+            margin-top: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        .audio-metadata {
+            font-size: 11px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div id="info"></div>
+    <div class="audio-gallery" id="audioGallery"></div>
+
+    <div id="tipo_carpeta">
+        <a href="../foto/" class="item">Fotos</a>
+        <a href="../documentos/" class="item">Documentos</a>
+        <a href="../video/" class="item">Videos</a>
+        <a href="../audio/" class="item">Audios</a>
+        <a href="../texto/" class="item">Textos</a>
+    </div>
+
+    <header class="header">
+        <a href="../" id="back-link">← Volver al índice</a>
+        <pre class="ascii-logo">
+        .  .   .-.   . .   .-.   . .   .-.   .-.
+        |\/|   |-|   |\|   |-|   |<    |-|    |
+        '  `   ` '   ' `   ` '   ' `   ` '   `-'
+        <a href="https://github.com/alejoduque/LiquidIce">software > alejoduque/LiquidIce</a>
+        </pre>
+    </header>
+
+    <script>
+        function formatDate(timestamp) {
+            const date = new Date(timestamp * 1000);
+            return date.toLocaleString();
+        }
+
+        async function loadAudioGallery() {
+            try {
+                const response = await fetch('/datos.json');
+                const data = await response.json();
+                const audioGallery = document.getElementById('audioGallery');
+                
+                // Filter only audio files
+                const audioFiles = data.filter(item => item.type.toLowerCase() === 'audio');
+                
+                // Sort by date descending
+                audioFiles.sort((a, b) => b.date - a.date);
+
+                // Clear gallery
+                audioGallery.innerHTML = '';
+
+                // Create audio items
+                audioFiles.forEach(audio => {
+                    const audioItem = document.createElement('div');
+                    audioItem.className = 'audio-item';
+
+                    audioItem.innerHTML = `
+                        <div class="audio-icon">🎵</div>
+                        <audio class="audio-player" controls>
+                            <source src="${audio.file}" type="audio/mpeg">
+                            Your browser does not support the audio element.
+                        </audio>
+                        <div class="audio-info">
+                            <div class="audio-metadata">
+                                Subido por: ${audio.from_name}<br>
+                                Fecha: ${formatDate(audio.date)}
+                            </div>
+                        </div>
+                    `;
+
+                    audioGallery.appendChild(audioItem);
+                });
+
+                // Update info count
+                const info = document.getElementById('info');
+                info.textContent = `Total de archivos de audio: ${audioFiles.length}`;
+
+            } catch (error) {
+                console.error('Error loading audio gallery:', error);
+                document.getElementById('info').innerHTML = `
+                    <div class="error">Error loading audio gallery: ${error.message}</div>
+                `;
+            }
+        }
+
+        // Load audio gallery when the page loads
+        document.addEventListener('DOMContentLoaded', loadAudioGallery);
+    </script>
+</body>
+</html>
