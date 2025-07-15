@@ -22,7 +22,7 @@ Todos los aportes que realicemos detro de un grupo de chat en Telegram pasaran a
 
 **LiquidIce** es útil para trabajos grupales y colaborativos. Asambleas y juntanzas o para llevar una bitácora personal.
 
-### Imagine un canal que conecta mensajes desde un grupo en **Telegram** al sistema de tranmision de radio online (http://red.radiolibre.cc) creando de paso un archivo en **Archive.org**. Y todo funcionando desde una pequeña **RaspberryPi** conectada en su casa.
+### Imagine un canal que conecta mensajes desde un grupo en **Telegram** al sistema de tranmision de radio online creando de paso un archivo en **Archive.org**. Y todo funcionando desde una pequeña **RaspberryPi** conectada a la red de cualquier casa.
 
 
 **LiquidIce** permite distribuir contenidos, por ejemplo: 
